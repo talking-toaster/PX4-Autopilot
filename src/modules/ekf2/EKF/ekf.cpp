@@ -340,3 +340,20 @@ void Ekf::predictState(const imuSample &imu_delayed)
 	float alpha_height_rate_lpf = 0.1f * imu_delayed.delta_vel_dt; // 10 seconds time constant
 	_height_rate_lpf = _height_rate_lpf * (1.0f - alpha_height_rate_lpf) + _state.vel(2) * alpha_height_rate_lpf;
 }
+
+void
+Ekf::resetGlobalPosToExternalObservation(double lat_deg, double lon_deg, float accuracy, uint64_t timestamp_observation) {
+
+   if (!_pos_ref.isInitialized()) {
+       return;
+   }
+
+   // apply a first order correction using velocity at the delated time horizon and the delta time
+   timestamp_observation = min(_time_latest_us, timestamp_observation);
+   const uint64_t time_oldest_imu = _imu_buffer.get_oldest().time_us;
+   const float dt = time_oldest_imu > timestamp_observation ? static_cast<float>(time_oldest_imu - timestamp_observation) * 1e-6f : -static_cast<float>(timestamp_observation - time_oldest_imu) * 1e-6f;
+
+   Vector2f pos_corrected = _pos_ref.project(lat_deg, lon_deg) + _state.vel.xy() * dt;
+
+    resetHorizontalPositionToExternal(pos_corrected, math::max(accuracy, FLT_EPSILON));
+}
