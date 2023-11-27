@@ -349,9 +349,8 @@ Ekf::resetGlobalPosToExternalObservation(double lat_deg, double lon_deg, float a
    }
 
    // apply a first order correction using velocity at the delated time horizon and the delta time
-   timestamp_observation = min(_time_latest_us, timestamp_observation);
-   const uint64_t time_oldest_imu = _imu_buffer.get_oldest().time_us;
-   const float dt = time_oldest_imu > timestamp_observation ? static_cast<float>(time_oldest_imu - timestamp_observation) * 1e-6f : -static_cast<float>(timestamp_observation - time_oldest_imu) * 1e-6f;
+   timestamp_observation = math::min(_time_latest_us, timestamp_observation);
+   const float dt = _time_delayed_us > timestamp_observation ? static_cast<float>(_time_delayed_us - timestamp_observation) * 1e-6f : -static_cast<float>(timestamp_observation - _time_delayed_us) * 1e-6f;
 
    Vector2f pos_corrected = _pos_ref.project(lat_deg, lon_deg) + _state.vel.xy() * dt;
 
