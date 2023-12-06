@@ -43,6 +43,10 @@ matrix::Vector2f DifferentialDriveKinematics::computeInverseKinematics(float lin
 
 	const float rotational_velocity = (_wheel_base / 2.f) * yaw_rate;
 
+	if(linear_velocity_x + fabsf(rotational_velocity) > _max_speed) {
+		linear_velocity_x = _max_speed - fabsf(rotational_velocity);
+	}
+
 	return Vector2f(linear_velocity_x - rotational_velocity,
 			linear_velocity_x + rotational_velocity) / _wheel_radius;
 }

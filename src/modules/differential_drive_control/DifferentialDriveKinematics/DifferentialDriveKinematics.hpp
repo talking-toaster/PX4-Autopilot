@@ -62,6 +62,13 @@ public:
 	void setWheelRadius(const float wheel_radius) { _wheel_radius = wheel_radius; };
 
 	/**
+	 * @brief Sets the maximum speed of the robot.
+	 *
+	 * @param max_speed The maximum speed of the robot.
+	 */
+	void setMaxSpeed(const float max_speed) { _max_speed = max_speed;};
+
+	/**
 	 * @brief Computes the inverse kinematics for differential drive.
 	 *
 	 * @param linear_velocity_x Linear velocity along the x-axis.
@@ -73,4 +80,5 @@ public:
 private:
 	float _wheel_base{0.f};
 	float _wheel_radius{0.f};
+	float _max_speed{0.f};
 };
