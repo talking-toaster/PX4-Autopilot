@@ -81,6 +81,7 @@ void DifferentialDriveControl::Run()
 		if (_vehicle_control_mode_sub.copy(&vehicle_control_mode)) {
 			_armed = vehicle_control_mode.flag_armed;
 			_manual_driving = vehicle_control_mode.flag_control_manual_enabled; // change this when more modes are supported
+			_mission_driving = vehicle_control_mode.flag_control_auto_enabled;
 		}
 	}
 
@@ -99,6 +100,13 @@ void DifferentialDriveControl::Run()
 		}
 	}
 
+	if(_mission_driving) {
+		// Mission mode
+		// directly receive setpoints from the guidance library
+
+
+	}
+
 	_differential_drive_setpoint_sub.update(&_differential_drive_setpoint);
 
 	// publish data to actuator_motors (output module)
@@ -113,7 +121,6 @@ void DifferentialDriveControl::Run()
 
 	if (_armed && !setpoint_timeout && vlid_max_speed) {
 		wheel_speeds *= _param_rdd_wheel_radius.get() / _param_rdd_max_speed.get();
-
 	} else {
 		wheel_speeds = {}; // stop
 	}

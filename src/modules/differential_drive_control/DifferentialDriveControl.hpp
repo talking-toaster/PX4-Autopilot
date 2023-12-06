@@ -98,6 +98,7 @@ private:
 	differential_drive_setpoint_s _differential_drive_setpoint{};
 	bool _armed = false;
 	bool _manual_driving = false;
+	bool _mission_driving = false;
 
 	DifferentialDriveKinematics _differential_drive_kinematics;
 
