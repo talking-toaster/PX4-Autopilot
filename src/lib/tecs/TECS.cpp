@@ -633,7 +633,7 @@ void TECSControl::resetIntegrals()
 	_throttle_integ_state = 0.0f;
 }
 
-float TECS::_update_speed_setpoint(const float tas_min, const float tas_max, const float tas_setpoint, const float tas)
+float TECS::_update_speed_setpoint(const float tas_min, const float tas_max, const float tas_setpoint)
 {
 	float new_setpoint{tas_setpoint};
 	const float percent_undersped = _control.getRatioUndersped();
@@ -739,7 +739,7 @@ void TECS::update(float pitch, float altitude, float hgt_setpoint, float EAS_set
 		// Calculate the demanded true airspeed
 		// TODO this function should not be in the module. Only give feedback that the airspeed can't be achieved.
 		control_setpoint.tas_setpoint = _update_speed_setpoint(eas_to_tas * _equivalent_airspeed_min,
-						eas_to_tas * _equivalent_airspeed_max, EAS_setpoint * eas_to_tas, eas_to_tas * eas.speed);
+						eas_to_tas * _equivalent_airspeed_max, EAS_setpoint * eas_to_tas);
 
 		const TECSControl::Input control_input{ .altitude = altitude,
 							.altitude_rate = hgt_rate,

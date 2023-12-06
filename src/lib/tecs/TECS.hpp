@@ -727,6 +727,6 @@ private:
 	/**
 	 * Update the desired airspeed
 	 */
-	float _update_speed_setpoint(const float tas_min, const float tas_max, const float tas_setpoint, const float tas);
+	float _update_speed_setpoint(const float tas_min, const float tas_max, const float tas_setpoint);
 };
 
