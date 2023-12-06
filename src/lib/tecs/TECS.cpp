@@ -68,9 +68,15 @@ void TECSAirspeedFilter::update(const float dt, const Input &input, const Param 
 		return;
 	}
 
+	if (!airspeed_sensor_available) {
+		_airspeed_state.speed = param.equivalent_airspeed_trim;
+		_airspeed_state.speed_rate = 0.f;
+		return;
+	}
+
 	float airspeed;
 
-	if (PX4_ISFINITE(input.equivalent_airspeed) && airspeed_sensor_available) {
+	if (PX4_ISFINITE(input.equivalent_airspeed)) {
 		airspeed = input.equivalent_airspeed;
 
 	} else {
@@ -79,7 +85,7 @@ void TECSAirspeedFilter::update(const float dt, const Input &input, const Param 
 
 	float airspeed_derivative;
 
-	if (PX4_ISFINITE(input.equivalent_airspeed_rate) && airspeed_sensor_available) {
+	if (PX4_ISFINITE(input.equivalent_airspeed_rate)) {
 		airspeed_derivative = input.equivalent_airspeed_rate;
 
 	} else {
@@ -353,7 +359,7 @@ TECSControl::SpecificEnergyRates TECSControl::_calcSpecificEnergyRates(const Alt
 
 void TECSControl::_detectUnderspeed(const Input &input, const Param &param, const Flag &flag)
 {
-	if (!flag.detect_underspeed_enabled) {
+	if (!flag.detect_underspeed_enabled || !flag.airspeed_enabled) {
 		_ratio_undersped = 0.0f;
 		return;
 	}
