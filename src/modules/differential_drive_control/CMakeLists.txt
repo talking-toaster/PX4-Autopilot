@@ -32,6 +32,7 @@
 ############################################################################
 
 add_subdirectory(DifferentialDriveKinematics)
+add_subdirectory(DifferentialDriveGuidance)
 
 px4_add_module(
 	MODULE modules__differential_drive_control
@@ -41,6 +42,8 @@ px4_add_module(
 		DifferentialDriveControl.hpp
 	DEPENDS
 		DifferentialDriveKinematics
+		DifferentialDriveGuidance
+		pid
 		px4_work_queue
 	MODULE_CONFIG
 		module.yaml
