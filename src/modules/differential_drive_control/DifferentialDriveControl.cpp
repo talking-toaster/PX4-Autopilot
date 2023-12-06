@@ -45,6 +45,7 @@ DifferentialDriveControl::DifferentialDriveControl() :
 	_differential_drive_kinematics.setWheelBase(_param_rdd_wheel_base.get());
 	_differential_drive_kinematics.setWheelRadius(_param_rdd_wheel_radius.get());
 	_differential_drive_kinematics.setMaxSpeed(_param_rdd_max_speed.get());
+	_differential_drive_kinematics.setMaxAngularVelocity(_param_rdd_max_angular_velocity.get());
 }
 
 bool DifferentialDriveControl::init()
@@ -71,6 +72,7 @@ void DifferentialDriveControl::Run()
 		_differential_drive_kinematics.setWheelBase(_param_rdd_wheel_base.get());
 		_differential_drive_kinematics.setWheelRadius(_param_rdd_wheel_radius.get());
 		_differential_drive_kinematics.setMaxSpeed(_param_rdd_max_speed.get());
+		_differential_drive_kinematics.setMaxAngularVelocity(_param_rdd_max_angular_velocity.get());
 	}
 
 	if (_vehicle_control_mode_sub.updated()) {

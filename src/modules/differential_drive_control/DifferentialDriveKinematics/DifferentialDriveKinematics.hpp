@@ -69,6 +69,13 @@ public:
 	void setMaxSpeed(const float max_speed) { _max_speed = max_speed;};
 
 	/**
+	 * @brief Sets the maximum angular speed of the robot.
+	 *
+	 * @param max_angular_speed The maximum angular speed of the robot.
+	 */
+	void setMaxAngularVelocity(const float max_angular_speed) { _max_angular_speed = max_angular_speed;};
+
+	/**
 	 * @brief Computes the inverse kinematics for differential drive.
 	 *
 	 * @param linear_velocity_x Linear velocity along the x-axis.
@@ -81,4 +88,5 @@ private:
 	float _wheel_base{0.f};
 	float _wheel_radius{0.f};
 	float _max_speed{0.f};
+	float _max_angular_speed{0.f};
 };
